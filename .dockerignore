@@ -1,0 +1,51 @@
+# Ignore Python cache files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyd
+
+# Ignore Django migration files
+migrations/
+
+# Ignore environment files
+.env
+
+# Ignore version control directories
+.git
+.gitignore
+
+# Ignore local development directories
+.vscode/
+.idea/
+*.swp
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yml
+
+# Ignore local virtual environment directories
+venv/
+.env/
+env/
+*.egg-info/
+
+# Ignore build artifacts and other unnecessary files
+*.log
+*.tmp
+*.bak
+*.old
+
+# Ignore test coverage reports
+.coverage
+*.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# Ignore static files if using a volume mount for static
+static/
+media/

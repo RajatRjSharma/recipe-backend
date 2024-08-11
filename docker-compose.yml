@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  recipe-api:
+    image: recipe-api:v1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=config.settings.development
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=${SECRET_KEY}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+    depends_on:
+      - redis
+    volumes:
+      - .:/recipe-api
+
+  redis:
+    image: redis:6.0.20-alpine
+    ports:
+      - 6379:6379
+
+networks:
+  default:
+    name: recipe-api-network

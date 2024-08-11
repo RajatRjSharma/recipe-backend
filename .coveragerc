@@ -1,0 +1,11 @@
+[run]
+# Directories or files to include in coverage measurement
+source = .
+
+[report]
+# Exclude test files and other files you don't want in the coverage report
+omit = */tests/*
+       */migrations/*
+       */admin.py
+       */management/*
+       */__init__.py
