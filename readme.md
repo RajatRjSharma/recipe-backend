@@ -9,3 +9,9 @@
 ## coverage report
 
 ## docker compose up
+
+## celery -A config beat -l info
+
+## celery -A config worker -l info (linux)
+
+## celery -A config worker -l info -P gevent (windows)
