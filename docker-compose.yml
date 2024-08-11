@@ -10,8 +10,8 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
-      - DJANGO_SETTINGS_MODULE=config.settings.development
-      - REDIS_URL=redis://redis:6379
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - REDIS_URL=${REDIS_URL}
       - SECRET_KEY=${SECRET_KEY}
       - DB_NAME=${DB_NAME}
       - DB_USERNAME=${DB_USERNAME}

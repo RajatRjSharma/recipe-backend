@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_spectacular',
     'django_rest_passwordreset',
+    'django_celery_beat',
 
     # Local apps
     'users',
@@ -196,9 +197,6 @@ SIMPLE_JWT = {
 DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 3  # in hours
 
 # Logging configuration
-import os
-
-# Logging configuration
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -248,5 +246,13 @@ LOGGING = {
         },
     },
 }
+
+# Celery configuration
+CELERY_TIMEZONE = "UTC"
+CELERY_BROKER_URL = config('REDIS_URL')
+CELERY_RESULT_BACKEND = config('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 # settings.py

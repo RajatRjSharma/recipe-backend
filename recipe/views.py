@@ -22,12 +22,12 @@ class RecipeListAPIView(generics.ListAPIView):
     
     def get(self, request, *args, **kwargs):
         try:
-            logger.info('Fetching list of recipes.')
+            logger.debug('Enter get list of recipes')
             response = super().get(request, *args, **kwargs)
-            logger.info('Successfully fetched list of recipes.')
+            logger.debug('Exit get list of recipes : success')
             return response
         except Exception as e:
-            logger.error(f'Error during fetching list of recipes: {e}', exc_info=True)
+            logger.error(f'Error get list of recipes: {e}', exc_info=True)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -40,9 +40,7 @@ class RecipeCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        logger.info(f'Creating a recipe for user {self.request.user}.')
         serializer.save(author=self.request.user)
-        logger.info('Recipe created successfully.')
 
 
 class RecipeAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -54,22 +52,35 @@ class RecipeAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
     
     def get(self, request, *args, **kwargs):
-        logger.info(f'Fetching details for recipe ID {self.kwargs["pk"]}.')
-        response = super().get(request, *args, **kwargs)
-        logger.info(f'Successfully fetched details for recipe ID {self.kwargs["pk"]}.')
-        return response
+        try:
+            logger.debug(f'Enter get recipe detail : {self.kwargs["pk"]}')
+            response = super().get(request, *args, **kwargs)
+            logger.debug(f'Exit get recipe detail : {self.kwargs["pk"]} : success')
+            return response
+        except Exception as e:
+            logger.error(f'Error get recipe detail : {self.kwargs["pk"]} : {e}', exc_info=True)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
     def put(self, request, *args, **kwargs):
-        logger.info(f'Updating recipe ID {self.kwargs["pk"]}.')
-        response = super().put(request, *args, **kwargs)
-        logger.info(f'Successfully updated recipe ID {self.kwargs["pk"]}.')
-        return response
+        try:
+            logger.debug(f'Enter update recipe detail : {self.kwargs["pk"]}')
+            response = super().put(request, *args, **kwargs)
+            logger.debug(f'Exit update recipe detail : {self.kwargs["pk"]} : success')
+            return response
+        except Exception as e:
+            logger.error(f'Error update recipe detail : {self.kwargs["pk"]} : {e}', exc_info=True)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, *args, **kwargs):
-        logger.info(f'Deleting recipe ID {self.kwargs["pk"]}.')
-        response = super().delete(request, *args, **kwargs)
-        logger.info(f'Successfully deleted recipe ID {self.kwargs["pk"]}.')
-        return response
+        try:
+            logger.debug(f'Enter delete recipe : {self.kwargs["pk"]}')
+            response = super().delete(request, *args, **kwargs)
+            logger.debug(f'Exit delete recipe : {self.kwargs["pk"]}: success')
+            return response
+        except Exception as e:
+            logger.error(f'Error delete recipe : {self.kwargs["pk"]} : {e}', exc_info=True)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class RecipeLikeAPIView(generics.CreateAPIView):
@@ -82,32 +93,32 @@ class RecipeLikeAPIView(generics.CreateAPIView):
     def post(self, request, pk):
         try:
             recipe = get_object_or_404(Recipe, id=self.kwargs['pk'])
-            logger.info(f'User {request.user} likes recipe ID {recipe.id}.')
+            logger.debug(f'Enter like recipe : {request.user} {recipe.id}')
             new_like, created = RecipeLike.objects.get_or_create(
                 user=request.user, recipe=recipe)
             if created:
-                logger.info(f'New like created for recipe ID {recipe.id}.')
+                logger.debug(f'Exit like recipe : {recipe.id} : success')
                 new_like.save()
                 return Response(status=status.HTTP_201_CREATED)
-            logger.info(f'Recipe ID {recipe.id} already liked by user {request.user}.')
+            logger.debug(f'Exit like recipe : {recipe.id} {request.user} : failure')
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            logger.error(f'Error during creating like for recipe ID {recipe.id}: {e}', exc_info=True)
+            logger.error(f'Error like recipe : {recipe.id} : {e}', exc_info=True)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, pk):
         try:
             recipe = get_object_or_404(Recipe, id=self.kwargs['pk'])
-            logger.info(f'User {request.user} unlikes recipe ID {recipe.id}.')
+            logger.debug(f'Enter dislike recipe : {request.user} {recipe.id}')
             like = RecipeLike.objects.filter(user=request.user, recipe=recipe)
             if like.exists():
                 like.delete()
-                logger.info(f'Removed like for recipe ID {recipe.id}.')
+                logger.debug(f'Exit dislike recipe : {recipe.id} : success')
                 return Response(status=status.HTTP_200_OK)
-            logger.info(f'No like found for recipe ID {recipe.id} by user {request.user}.')
+            logger.debug(f'Exit dislike recipe : {recipe.id} {request.user} : failure')
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            logger.error(f'Error during removing like for recipe ID {recipe.id}: {e}', exc_info=True)
+            logger.error(f'Error dislike recipe : {recipe.id} : {e}', exc_info=True)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def perform_create(self, serializer):

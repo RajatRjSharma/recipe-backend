@@ -1,0 +1,11 @@
+<p>Hello {{ user.username }},</p>
+
+<p>You have received likes on the following recipes today:</p>
+
+<ul>
+{% for like in liked_recipes %}
+    <li>{{ like.recipe.title }} - liked by {{ like.user.username }}</li>
+{% endfor %}
+</ul>
+
+<p>Thank you!</p>
