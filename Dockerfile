@@ -33,6 +33,7 @@ RUN chown root:root /recipe-api/entrypoint.sh
 EXPOSE 8000
 
 # Use the entrypoint script
-CMD ["/recipe-api/entrypoint.sh"]
+ENTRYPOINT ["/recipe-api/entrypoint.sh"]
 
+# Set User Created Above
 USER django-user
