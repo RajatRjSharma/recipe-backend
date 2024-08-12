@@ -19,11 +19,7 @@ WORKDIR /recipe-api
 COPY . /recipe-api/
 
 # Install All Required Packages
-RUN pip install --no-cache-dir -r requirements.txt && \
-    adduser \
-        --disabled-password \
-        --no-create-home \
-        django-user
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Update Execute Permission for entrypoint.sh
 RUN chmod +x /recipe-api/entrypoint.sh
@@ -33,7 +29,4 @@ RUN chown root:root /recipe-api/entrypoint.sh
 EXPOSE 8000
 
 # Use the entrypoint script
-ENTRYPOINT ["/recipe-api/entrypoint.sh"]
-
-# Set User Created Above
-USER django-user
+CMD ["/recipe-api/entrypoint.sh"]
