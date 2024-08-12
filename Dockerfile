@@ -23,6 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Update Execute Permission for entrypoint.sh
 RUN chmod +x /recipe-api/entrypoint.sh
+RUN chown root:root /recipe-api/entrypoint.sh
 
 # Exposing TO PORT 8000
 EXPOSE 8000
