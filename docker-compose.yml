@@ -26,23 +26,7 @@ services:
     volumes:
       - .:/recipe-api
 
-  celery:
-    build: .
-    user: django-user
-    command: ["celery", "-A", "config", "worker", "-l", "info"]
-    volumes:
-      - .:/recipe-api
-    depends_on:
-      - redis
-
-  celerybead:
-    build: .
-    user: django-user
-    command: ["celery", "-A", "config", "beat", "-l", "info"]
-    volumes:
-      - .:/recipe-api
-    depends_on:
-      - redis
+  
 
   redis:
     image: redis:6.0.20-alpine
