@@ -1,6 +1,6 @@
 # Recipe API
 
-- ### Before starting further please create a python environment first, then install requirements.txt and add a .env with required envs as shown in .env.example
+- ### Before starting further please create a python environment first, then install /requirements.txt and add a /.env with required envs as shown in /.env.example
 
   ```
   (Add python env)
@@ -16,24 +16,24 @@
   (Install all required packages in python env)
   pip install -r requirements.txt
 
-  (Add .env with required envs from .env.example file)
+  (Add /.env with required envs from /.env.example file)
 
   (Please check output folder for email and coverage images)
   ```
 
 - ### Docker integration
 
-- Added Dockerfile for django project
-- Docker compose for containerizing django project and redis for celery
+- Added Dockerfile for django project.
+- Docker compose for containerizing django project, redis for celery, celery worker and beat for background task scheduling.
 
   ```
   (Build Docker Image)
   docker build -t recipe-api:v1.0.0
 
-  (Run Docker Image will also take env mentioned in .env.example file -e env value)
+  (Run Docker Image will also take env mentioned in /.env.example file -e env value)
   docker run -d -p 8000:8000 --name recipe-api-v1.0.0 recipe-api:v1.0.0
 
-  (Recommended all in one step, will used config defined in docker-compose.yml file, also requires .env with all env mentioned in .env.example file)
+  (Recommended all in one step, will used config defined in docker-compose.yml file, also requires /.env with all env mentioned in /.env.example file)
   docker compose up (Windows)
   docker-compose up (Linux)
   ```
@@ -56,8 +56,9 @@
 
 - ### Asynchronous Task Handling with Celery
 
-- Integrated Celery by adding its config in base.py and creating respective celery.py in config for its instantiation, task scan.
+- Integrated Celery by adding its config in config/settings/base.py and creating respective config/celery.py and updated config/__init__.py for its instantiation, tasks scan.
 - Also integrated Redis which act as broker and backup db for celery. Updated it in docker compose to containerized with project when docker compose is run.
+- Also updated celery worker containerization in docker compose.
 
   ```
   (Watch on celery tasks invoke and status on completion)
@@ -69,6 +70,7 @@
 
 - Added a daily email notification on the like received on their recipes.
 - Used celery beat to get it done, Added a task for same in users/tasks.py and added a beat schedule for it in config/celery.py file which will invoke mid night at 00:00 UTC.
+- Also updated celery beat containerization in docker compose.
 
   ```
   (Watch on celery bead tasks invoke)
