@@ -1,12 +1,9 @@
-version: '3.8'
+version: "3.8"
 
 services:
   recipe-api:
-    image: recipe-api:v1.0.0
-    build:
-      context: .
-      dockerfile: Dockerfile
-    entrypoint: /recipe-api/entrypoint.sh
+    build: .
+    command: ["/recipe-api/entrypoint.sh"]
     ports:
       - "8000:8000"
     environment:
@@ -25,6 +22,24 @@ services:
       - redis
     volumes:
       - .:/recipe-api
+
+  celery:
+    build: .
+    user: django-user
+    command: ["celery", "-A", "config", "worker", "-l", "info"]
+    volumes:
+      - .:/recipe-api
+    depends_on:
+      - redis
+
+  celerybead:
+    build: .
+    user: django-user
+    command: ["celery", "-A", "config", "beat", "-l", "info"]
+    volumes:
+      - .:/recipe-api
+    depends_on:
+      - redis
 
   redis:
     image: redis:6.0.20-alpine
