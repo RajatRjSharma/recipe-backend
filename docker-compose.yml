@@ -34,7 +34,6 @@ services:
       - .:/recipe-api
     depends_on:
       - redis
-      - recipe-api
 
   celerybead:
     build: .
@@ -44,7 +43,6 @@ services:
       - .:/recipe-api
     depends_on:
       - redis
-      - recipe-api
 
   redis:
     image: redis:6.0.20-alpine
