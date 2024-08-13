@@ -28,7 +28,7 @@
 
   ```
   (Build Docker Image)
-  docker build -t recipe-api:v1.0.0
+  docker build -t recipe-api:v1.0.0 .
 
   (Run Docker Image will also take env mentioned in /.env.example file -e env value)
   docker run -d -p 8000:8000 --name recipe-api-v1.0.0 recipe-api:v1.0.0
