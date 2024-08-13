@@ -2,12 +2,19 @@ from django.urls import path
 
 from recipe import views
 
-app_name = 'recipe'
+app_name = "recipe"
 
 urlpatterns = [
-    path('', views.RecipeListAPIView.as_view(), name="recipe-list"),
-    path('<int:pk>/', views.RecipeAPIView.as_view(), name="recipe-detail"),
-    path('create/', views.RecipeCreateAPIView.as_view(), name="recipe-create"),
-    path('<int:pk>/like/', views.RecipeLikeAPIView.as_view(),
-         name='recipe-like'),
+    path("", views.RecipeViewSet.as_view({"get": "list"}), name="recipe-list"),
+    path(
+        "<int:pk>/",
+        views.RecipeViewSet.as_view(
+            {"get": "retrieve", "put": "update", "delete": "destroy"}
+        ),
+        name="recipe-detail",
+    ),
+    path(
+        "create/", views.RecipeViewSet.as_view({"post": "create"}), name="recipe-create"
+    ),
+    path("<int:pk>/like/", views.RecipeLikeAPIView.as_view(), name="recipe-like"),
 ]

@@ -56,7 +56,7 @@
 
 - ### Asynchronous Task Handling with Celery
 
-- Integrated Celery by adding its config in config/settings/base.py and creating respective config/celery.py and updated config/__init__.py for its instantiation, tasks scan.
+- Integrated Celery by adding its config in config/settings/base.py and creating respective config/celery.py and updated config/`__init__`.py for its instantiation, tasks scan.
 - Also integrated Redis which act as broker and backup db for celery. Updated it in docker compose to containerized with project when docker compose is run.
 - Also updated celery worker containerization in docker compose.
 
@@ -69,7 +69,7 @@
 - ### Email Queue Implementation
 
 - Added a daily email notification on the like received on their recipes.
-- Used celery beat to get it done, Added a task for same in users/tasks.py and added a beat schedule for it in config/celery.py file which will invoke mid night at 00:00 UTC.
+- Used celery beat to get it done, Added a task for same in users/tasks.py and added a beat schedule for it in config/celery.py file which will invoke 5 mins before mid night at 23:55 UTC.
 - Also updated celery beat containerization in docker compose.
 
   ```
@@ -81,6 +81,11 @@
 
 - Added the config for logger in base.py for info, debug, error and format.
 - Also integrated it in recipe/view.py
+
+- ### API Improvements
+
+- Added the viewset for recipe model for list, create, retrieve, update and destroy.
+- Also integrate pagination by adding config in config/base.py
 
 - ### Update the code to github
 
