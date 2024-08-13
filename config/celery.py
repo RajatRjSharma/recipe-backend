@@ -21,6 +21,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send-daily-likes-notification': {
         'task': 'users.tasks.send_daily_likes_notification',
-        'schedule': crontab(hour=13, minute=0),  # Executes daily at midnight in UTC
+        'schedule': crontab(hour=5, minute=0),  # Executes daily at midnight in UTC
     },
 }
