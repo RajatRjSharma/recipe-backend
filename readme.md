@@ -1,6 +1,6 @@
-# Recipe API
+# Recipe API (Python Django Backend Project)
 
-- ### Before starting further please create a python environment first, then install /requirements.txt and add a /.env with required envs as shown in /.env.example
+- ### Before starting further please create a Python environment first, then install /requirements.txt and add a /.env with the required envs as shown in /.env.example
 
   ```
   (Add python env)
@@ -92,5 +92,4 @@
   [Github Repo](https://github.com/RajatRjSharma/recipe-backend)
 
 - ### Added a AWS EC2 instance, Postgres DB, Nginx, Docker configured (You may get warning for ssl certificate but you can accept it as I have used openssl for demonstration)
-
-  [Live version](https://ec2-13-127-195-54.ap-south-1.compute.amazonaws.com/)
+- Live Link is removed now.
